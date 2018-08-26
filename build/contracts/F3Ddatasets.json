@@ -1,0 +1,2103 @@
+{
+  "contractName": "F3Ddatasets",
+  "abi": [],
+  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820d95b6cfb178429d1415eeda8192f6f195ae32dcfeff6ee3a4d155306c396977e0029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820d95b6cfb178429d1415eeda8192f6f195ae32dcfeff6ee3a4d155306c396977e0029",
+  "sourceMap": "244:2814:1:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "244:2814:1:-;;;;;;;;",
+  "source": "pragma solidity ^0.4.24;\r\n\r\n//==============================================================================\r\n//   __|_ _    __|_ _  .\r\n//  _\\ | | |_|(_ | _\\  .\r\n//==============================================================================\r\nlibrary F3Ddatasets {\r\n    //compressedData key\r\n    // [76-33][32][31][30][29][28-18][17][16-6][5-3][2][1][0]\r\n        // 0 - new player (bool)\r\n        // 1 - joined round (bool)\r\n        // 2 - new  leader (bool)\r\n        // 3-5 - air drop tracker (uint 0-999)\r\n        // 6-16 - round end time\r\n        // 17 - winnerTeam\r\n        // 18 - 28 timestamp\r\n        // 29 - team\r\n        // 30 - 0 = reinvest (round), 1 = buy (round), 2 = buy (ico), 3 = reinvest (ico)\r\n        // 31 - airdrop happened bool\r\n        // 32 - airdrop tier\r\n        // 33 - airdrop amount won\r\n    //compressedIDs key\r\n    // [77-52][51-26][25-0]\r\n        // 0-25 - pID\r\n        // 26-51 - winPID\r\n        // 52-77 - rID\r\n    struct EventReturns {\r\n        uint256 compressedData;\r\n        uint256 compressedIDs;\r\n        address winnerAddr;         // winner address\r\n        bytes32 winnerName;         // winner name\r\n        uint256 amountWon;          // amount won\r\n        uint256 newPot;             // amount in new pot\r\n        uint256 P3DAmount;          // amount distributed to p3d\r\n        uint256 genAmount;          // amount distributed to gen\r\n        uint256 potAmount;          // amount added to pot\r\n    }\r\n    struct Player {\r\n        address addr;   // player address\r\n        bytes32 name;   // player name\r\n        uint256 win;    // winnings vault\r\n        uint256 gen;    // general vault\r\n        uint256 aff;    // affiliate vault\r\n        uint256 lrnd;   // last round played\r\n        uint256 laff;   // last affiliate id used\r\n    }\r\n    struct PlayerRounds {\r\n        uint256 eth;    // eth player has added to round (used for eth limiter)\r\n        uint256 keys;   // keys\r\n        uint256 mask;   // player mask\r\n        uint256 ico;    // ICO phase investment\r\n    }\r\n    struct Round {\r\n        uint256 plyr;   // pID of player in lead\r\n        uint256 team;   // tID of team in lead\r\n        uint256 end;    // time ends/ended\r\n        bool ended;     // has round end function been ran\r\n        uint256 strt;   // time round started\r\n        uint256 keys;   // keys\r\n        uint256 eth;    // total eth in\r\n        uint256 pot;    // eth to pot (during round) / final amount paid to winner (after round ends)\r\n        uint256 mask;   // global mask\r\n        uint256 ico;    // total eth sent in during ICO phase\r\n        uint256 icoGen; // total eth for gen during ICO phase\r\n        uint256 icoAvg; // average key price for ICO phase\r\n    }\r\n    struct TeamFee {\r\n        uint256 gen;    // % of buy in thats paid to key holders of current round\r\n        uint256 p3d;    // % of buy in thats paid to p3d holders\r\n    }\r\n    struct PotSplit {\r\n        uint256 gen;    // % of pot thats paid to key holders of current round\r\n        uint256 p3d;    // % of pot thats paid to p3d holders\r\n    }\r\n}",
+  "sourcePath": "/Users/zhengwei/projects/solidity/fomo-GOSL/contracts/F3Ddatasets.sol",
+  "ast": {
+    "absolutePath": "/Users/zhengwei/projects/solidity/fomo-GOSL/contracts/F3Ddatasets.sol",
+    "exportedSymbols": {
+      "F3Ddatasets": [
+        204
+      ]
+    },
+    "id": 205,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 125,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 204,
+        "linearizedBaseContracts": [
+          204
+        ],
+        "name": "F3Ddatasets",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "F3Ddatasets.EventReturns",
+            "id": 144,
+            "members": [
+              {
+                "constant": false,
+                "id": 127,
+                "name": "compressedData",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "981:22:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 126,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "981:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 129,
+                "name": "compressedIDs",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1014:21:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 128,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1014:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 131,
+                "name": "winnerAddr",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1046:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 130,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1046:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 133,
+                "name": "winnerName",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1101:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 132,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1101:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 135,
+                "name": "amountWon",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1153:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 134,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1153:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 137,
+                "name": "newPot",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1204:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 136,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1204:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 139,
+                "name": "P3DAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1262:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 138,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1262:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 141,
+                "name": "genAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1328:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 140,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1328:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 143,
+                "name": "potAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1394:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 142,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1394:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "EventReturns",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "950:501:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.Player",
+            "id": 159,
+            "members": [
+              {
+                "constant": false,
+                "id": 146,
+                "name": "addr",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1482:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 145,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1482:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 148,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1525:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 147,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1525:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 150,
+                "name": "win",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1565:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 149,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1565:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 152,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1608:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 151,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1608:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 154,
+                "name": "aff",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1650:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 153,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1650:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 156,
+                "name": "lrnd",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1694:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 155,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1694:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 158,
+                "name": "laff",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1740:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 157,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1740:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Player",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "1457:331:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.PlayerRounds",
+            "id": 168,
+            "members": [
+              {
+                "constant": false,
+                "id": 161,
+                "name": "eth",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1825:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 160,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1825:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 163,
+                "name": "keys",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1906:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 162,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1906:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 165,
+                "name": "mask",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1939:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 164,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1939:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 167,
+                "name": "ico",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1979:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 166,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1979:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PlayerRounds",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "1794:231:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.Round",
+            "id": 193,
+            "members": [
+              {
+                "constant": false,
+                "id": 170,
+                "name": "plyr",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2055:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 169,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2055:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 172,
+                "name": "team",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2105:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 171,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2105:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 174,
+                "name": "end",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2153:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 173,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2153:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 176,
+                "name": "ended",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2197:10:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 175,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2197:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 178,
+                "name": "strt",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2257:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 177,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2257:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 180,
+                "name": "keys",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2304:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 179,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2304:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 182,
+                "name": "eth",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2337:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 181,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2337:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 184,
+                "name": "pot",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2378:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 183,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2378:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 186,
+                "name": "mask",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2481:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 185,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2481:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 188,
+                "name": "ico",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2521:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 187,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2521:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 190,
+                "name": "icoGen",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2584:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 189,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2584:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 192,
+                "name": "icoAvg",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2647:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 191,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2647:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Round",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2031:673:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.TeamFee",
+            "id": 198,
+            "members": [
+              {
+                "constant": false,
+                "id": 195,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "2736:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 194,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2736:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 197,
+                "name": "p3d",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "2819:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 196,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2819:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TeamFee",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2710:172:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.PotSplit",
+            "id": 203,
+            "members": [
+              {
+                "constant": false,
+                "id": 200,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 203,
+                "src": "2915:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 199,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2915:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 202,
+                "name": "p3d",
+                "nodeType": "VariableDeclaration",
+                "scope": 203,
+                "src": "2995:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 201,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2995:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PotSplit",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2888:167:1",
+            "visibility": "public"
+          }
+        ],
+        "scope": 205,
+        "src": "244:2814:1"
+      }
+    ],
+    "src": "0:3058:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/zhengwei/projects/solidity/fomo-GOSL/contracts/F3Ddatasets.sol",
+    "exportedSymbols": {
+      "F3Ddatasets": [
+        204
+      ]
+    },
+    "id": 205,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 125,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 204,
+        "linearizedBaseContracts": [
+          204
+        ],
+        "name": "F3Ddatasets",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "F3Ddatasets.EventReturns",
+            "id": 144,
+            "members": [
+              {
+                "constant": false,
+                "id": 127,
+                "name": "compressedData",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "981:22:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 126,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "981:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 129,
+                "name": "compressedIDs",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1014:21:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 128,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1014:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 131,
+                "name": "winnerAddr",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1046:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 130,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1046:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 133,
+                "name": "winnerName",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1101:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 132,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1101:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 135,
+                "name": "amountWon",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1153:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 134,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1153:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 137,
+                "name": "newPot",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1204:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 136,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1204:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 139,
+                "name": "P3DAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1262:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 138,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1262:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 141,
+                "name": "genAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1328:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 140,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1328:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 143,
+                "name": "potAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 144,
+                "src": "1394:17:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 142,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1394:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "EventReturns",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "950:501:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.Player",
+            "id": 159,
+            "members": [
+              {
+                "constant": false,
+                "id": 146,
+                "name": "addr",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1482:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 145,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1482:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 148,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1525:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 147,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1525:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 150,
+                "name": "win",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1565:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 149,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1565:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 152,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1608:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 151,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1608:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 154,
+                "name": "aff",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1650:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 153,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1650:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 156,
+                "name": "lrnd",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1694:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 155,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1694:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 158,
+                "name": "laff",
+                "nodeType": "VariableDeclaration",
+                "scope": 159,
+                "src": "1740:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 157,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1740:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Player",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "1457:331:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.PlayerRounds",
+            "id": 168,
+            "members": [
+              {
+                "constant": false,
+                "id": 161,
+                "name": "eth",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1825:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 160,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1825:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 163,
+                "name": "keys",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1906:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 162,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1906:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 165,
+                "name": "mask",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1939:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 164,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1939:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 167,
+                "name": "ico",
+                "nodeType": "VariableDeclaration",
+                "scope": 168,
+                "src": "1979:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 166,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1979:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PlayerRounds",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "1794:231:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.Round",
+            "id": 193,
+            "members": [
+              {
+                "constant": false,
+                "id": 170,
+                "name": "plyr",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2055:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 169,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2055:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 172,
+                "name": "team",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2105:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 171,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2105:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 174,
+                "name": "end",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2153:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 173,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2153:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 176,
+                "name": "ended",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2197:10:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 175,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2197:4:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 178,
+                "name": "strt",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2257:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 177,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2257:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 180,
+                "name": "keys",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2304:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 179,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2304:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 182,
+                "name": "eth",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2337:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 181,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2337:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 184,
+                "name": "pot",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2378:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 183,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2378:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 186,
+                "name": "mask",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2481:12:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 185,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2481:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 188,
+                "name": "ico",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2521:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 187,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2521:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 190,
+                "name": "icoGen",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2584:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 189,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2584:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 192,
+                "name": "icoAvg",
+                "nodeType": "VariableDeclaration",
+                "scope": 193,
+                "src": "2647:14:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 191,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2647:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Round",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2031:673:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.TeamFee",
+            "id": 198,
+            "members": [
+              {
+                "constant": false,
+                "id": 195,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "2736:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 194,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2736:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 197,
+                "name": "p3d",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "2819:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 196,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2819:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "TeamFee",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2710:172:1",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "F3Ddatasets.PotSplit",
+            "id": 203,
+            "members": [
+              {
+                "constant": false,
+                "id": 200,
+                "name": "gen",
+                "nodeType": "VariableDeclaration",
+                "scope": 203,
+                "src": "2915:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 199,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2915:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 202,
+                "name": "p3d",
+                "nodeType": "VariableDeclaration",
+                "scope": 203,
+                "src": "2995:11:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 201,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2995:7:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "PotSplit",
+            "nodeType": "StructDefinition",
+            "scope": 204,
+            "src": "2888:167:1",
+            "visibility": "public"
+          }
+        ],
+        "scope": 205,
+        "src": "244:2814:1"
+      }
+    ],
+    "src": "0:3058:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-08-23T12:36:17.712Z"
+}
